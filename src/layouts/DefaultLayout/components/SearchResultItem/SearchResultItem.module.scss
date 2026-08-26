@@ -1,0 +1,49 @@
+.wrapper {
+    width: 100%;
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
+
+    background: #fff;
+    border-radius: 8px;
+    padding: 6px;
+
+    &:hover {
+        background: rgba(255, 192, 203, 0.356);
+    }
+    
+    .left {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        .image {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .content {
+            p:first-child {
+                font-weight: bold;
+            }
+            p:last-child {
+                color: #989393;
+            }
+        }
+    }
+
+    .status {
+        align-self: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 4px 8px;
+        border-radius: 8px;
+        background-color: #f1f5f9;
+        color: #475569;
+        font-weight: bold;
+    }
+}

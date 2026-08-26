@@ -1,0 +1,15 @@
+.wrapper {
+    position: relative;
+    
+    .button {
+        font-weight: bold;
+        color: #000000c3;
+        padding: 8px;
+        border-radius: 16px;
+
+        &:hover {
+            background-color: rgba(255, 166, 0, 0.427);
+            color: rgba(255, 77, 0, 0.648);
+        }
+    }
+}
