@@ -18,18 +18,42 @@ function ModalDemo() {
             >
                 Basic Modal
             </button>
+
             <button
                 className={styles.btn}
                 onClick={() => setActiveModal("animation")}
             >
                 Animation Modal
             </button>
+
+            <button
+                className={styles.btn}
+                onClick={() => setActiveModal("x-close")}
+            >
+                X close Modal
+            </button>
+
+            <button
+                className={styles.btn}
+                onClick={() => setActiveModal("class-custom")}
+            >
+                Custom className Modal
+            </button>
+
+            <button
+                className={styles.btn}
+                onClick={() => setActiveModal("callback")}
+            >
+                Callback Modal
+            </button>
+
             <button
                 className={styles.btn}
                 onClick={() => setActiveModal("advanced")}
             >
                 Advanced Modal
             </button>
+
             <Modal isOpen={activeModal === "basic"} onRequestClose={closeModal}>
                 <h2>Modal Content</h2>
                 <p>Đây là nội dung modal</p>
@@ -44,7 +68,39 @@ function ModalDemo() {
                 <h2>Modal Content</h2>
                 <p>Đây là nội dung modal</p>
             </Modal>
-            
+
+            <Modal
+                isOpen={activeModal === "x-close"}
+                onRequestClose={closeModal}
+                shouldCloseOnEsc={false}
+                shouldCloseOnOverlayClick={false}
+            >
+                <h2>Modal Content</h2>
+                <p>Đây là nội dung modal</p>
+            </Modal>
+
+            <Modal
+                isOpen={activeModal === "class-custom"}
+                onRequestClose={closeModal}
+                className={"a"}
+                overlayClassName={"b"}
+                bodyOpenClassName="c"
+                htmlOpenClassName="d"
+            >
+                <h2>Modal Content</h2>
+                <p>Đây là nội dung modal</p>
+            </Modal>
+
+            <Modal
+                isOpen={activeModal === "callback"}
+                onRequestClose={closeModal}
+                onAfterOpen={() => console.log("Modal đã mở")}
+                onAfterClose={() => console.log("Modal đã đóng")}
+            >
+                <h2>Modal Content</h2>
+                <p>Đây là nội dung modal</p>
+            </Modal>
+
             <Modal
                 isOpen={activeModal === "advanced"}
                 onAfterOpen={() => console.log("Modal đã mở")}
