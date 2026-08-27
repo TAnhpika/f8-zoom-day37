@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./Modal.module.scss";
 import clsx from "clsx";
 
@@ -17,6 +17,20 @@ function Modal({
     overlayClassName,
     children,
 }) {
+    // useRef dùng để lưu một giá trị qua các lần render
+    // mà không làm component render lại.
+    const previousIsOpen = useRef(isOpen);
+
+    // close animation
+    const [isClosing, setIsClosing] = useState(false);
+    const closeTimerRef = useRef(null);
+
+    useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        if (isOpen) setIsClosing(false);
+        return clearTimeout(closeTimerRef.current);
+    }, [isOpen]);
+
     // onAfterOpen
     useEffect(() => {
         if (isOpen) onAfterOpen?.();
@@ -25,8 +39,12 @@ function Modal({
     // closeTimeoutMS
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const handleRequestClose = () => {
-        setTimeout(() => {
-            onRequestClose();
+        if (isClosing) return;
+
+        setIsClosing(true)
+
+        closeTimerRef.current = setTimeout(() => {
+            onRequestClose?.();
         }, closeTimeoutMS);
     };
 
@@ -59,10 +77,6 @@ function Modal({
     }, [htmlOpenClassName]);
 
     // onAfterClose
-    // useRef dùng để lưu một giá trị qua các lần render
-    // mà không làm component render lại.
-    const previousIsOpen = useRef(isOpen);
-
     useEffect(() => {
         if (previousIsOpen.current && !isOpen) onAfterClose?.();
 
@@ -73,7 +87,7 @@ function Modal({
     if (!isOpen) return null;
 
     return (
-        <div className={styles.modal}>
+        <div className={clsx(styles.modal, isClosing && styles.closing)}>
             {/* className */}
             <div className={clsx(styles.content, className)}>
                 {/* Close btn */}
