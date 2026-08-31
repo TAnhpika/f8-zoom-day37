@@ -20,6 +20,10 @@ function Navigation() {
             title: "Profile",
             to: "/profile",
         },
+        {
+            title: "PerformanceDemo",
+            to: "/performance-demo",
+        },
     ];
     return (
         <>
