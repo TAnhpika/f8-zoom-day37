@@ -1,6 +1,6 @@
 import styles from "./Profile.module.scss";
 
-import DefaultAvatar from "../../assets/images/avatar-placeholder.png";
+import DefaultAvatar from "@/assets/images/avatar-placeholder.png";
 import { useEffect, useState } from "react";
 
 function Profile() {
@@ -11,7 +11,7 @@ function Profile() {
             URL.revokeObjectURL(previewUrl);
         };
     }, [previewUrl]);
-    
+
     const handleChange = (e) => {
         const image = e.target.files[0];
         const previewUrl = URL.createObjectURL(image);

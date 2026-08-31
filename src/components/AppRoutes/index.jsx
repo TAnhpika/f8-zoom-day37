@@ -1,10 +1,11 @@
 import { HashRouter, Route, Routes } from "react-router";
 
-import DefaultLayout from "../../layouts/DefaultLayout";
-import Home from "../../pages/Home";
-import Profile from "../../pages/Profile";
-import ModalDemo from "../../pages/ModalDemo";
-import ScrollDemo from "../../pages/ScrollDemo";
+import DefaultLayout from "@/layouts/DefaultLayout";
+import Home from "@/pages/Home";
+import Profile from "@/pages/Profile";
+import ModalDemo from "@/pages/ModalDemo";
+import ScrollDemo from "@/pages/ScrollDemo";
+import PerformanceDemo from "@/pages/PerformanceDemo";
 
 function AppRoutes() {
     return (
@@ -15,6 +16,7 @@ function AppRoutes() {
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/modal-demo" element={<ModalDemo />} />
                     <Route path="/scroll-demo" element={<ScrollDemo />} />
+                    <Route path="/performance-demo" element={<PerformanceDemo />} />
                 </Route>
             </Routes>
         </HashRouter>

@@ -1,6 +1,6 @@
 import styles from "./AppLogo.module.scss";
 
-import Logo from "../../../../assets/images/f8-logo.png";
+import Logo from "@/assets/images/f8-logo.png";
 import { Link } from "react-router";
 
 function AppLogo() {

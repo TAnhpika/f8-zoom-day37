@@ -1,7 +1,7 @@
 import styles from "./ModalDemo.module.scss";
 
 import { useState } from "react";
-import Modal from "../../components/Modal";
+import Modal from "@/components/Modal";
 
 function ModalDemo() {
     const [activeModal, setActiveModal] = useState(false);
