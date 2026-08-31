@@ -24,6 +24,10 @@ function Navigation() {
             title: "PerformanceDemo",
             to: "/performance-demo",
         },
+        {
+            title: "FocusDemo",
+            to: "/focus-demo",
+        },
     ];
     return (
         <>
