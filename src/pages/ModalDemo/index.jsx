@@ -1,11 +1,22 @@
 import styles from "./ModalDemo.module.scss";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Modal from "@/components/Modal";
 
 function ModalDemo() {
     const [activeModal, setActiveModal] = useState(false);
 
+    const modalRef = useRef(null);
+
+    const openImperativeModal = () => {
+        modalRef.current?.open();
+    };
+    const closeImperativeModal = () => {
+        modalRef.current?.close();
+    };
+    const toggleImperativeModal = () => {
+        modalRef.current?.toggle();
+    };
     const closeModal = () => {
         setActiveModal(null);
     };
@@ -52,6 +63,13 @@ function ModalDemo() {
                 onClick={() => setActiveModal("advanced")}
             >
                 Advanced Modal
+            </button>
+
+            <button
+                className={styles.btn}
+                onClick={openImperativeModal}
+            >
+                Imperative Modal
             </button>
 
             <Modal isOpen={activeModal === "basic"} onRequestClose={closeModal}>
@@ -116,6 +134,16 @@ function ModalDemo() {
             >
                 <h2>Modal Content</h2>
                 <p>Đây là nội dung modal</p>
+            </Modal>
+
+            <Modal
+                ref={modalRef}
+                isOpen={false}
+                onRequestClose={closeImperativeModal}
+            >
+                <h2>Modal Content</h2>
+                <p>Đây là nội dung modal</p>
+                <button onClick={toggleImperativeModal}>Toggle</button>
             </Modal>
         </>
     );

@@ -1,120 +1,151 @@
 import PropTypes from "prop-types";
-import { useEffect, useRef, useState } from "react";
+import {
+    forwardRef,
+    useEffect,
+    useImperativeHandle,
+    useRef,
+    useState,
+} from "react";
 import styles from "./Modal.module.scss";
 import clsx from "clsx";
 
-function Modal({
-    isOpen = false,
-    onAfterOpen,
-    onAfterClose,
-    onRequestClose,
-    closeTimeoutMS = 0,
-    shouldCloseOnOverlayClick = true,
-    shouldCloseOnEsc = true,
-    className,
-    bodyOpenClassName = "modal-open",
-    htmlOpenClassName = "modal-open",
-    overlayClassName,
-    children,
-}) {
-    // useRef dùng để lưu một giá trị qua các lần render
-    // mà không làm component render lại.
-    const previousIsOpen = useRef(isOpen);
+const Modal = forwardRef(
+    (
+        {
+            isOpen: _isOpen = false,
+            onAfterOpen,
+            onAfterClose,
+            onRequestClose,
+            closeTimeoutMS = 0,
+            shouldCloseOnOverlayClick = true,
+            shouldCloseOnEsc = true,
+            className,
+            bodyOpenClassName = "modal-open",
+            htmlOpenClassName = "modal-open",
+            overlayClassName,
+            children,
+        },
+        ref,
+    ) => {
+        const [isOpen, setIsOpen] = useState(_isOpen);
 
-    // close animation
-    const [isClosing, setIsClosing] = useState(false);
-    const closeTimerRef = useRef(null);
+        useEffect(() => {
+            setIsOpen(_isOpen);
+        }, [_isOpen]);
 
-    useEffect(() => {
-        // eslint-disable-next-line react-hooks/set-state-in-effect
-        if (isOpen) setIsClosing(false);
-        return clearTimeout(closeTimerRef.current);
-    }, [isOpen]);
+        useImperativeHandle(
+            ref,
+            () => ({
+                open() {
+                    setIsOpen(true);
+                },
+                close() {
+                    setIsOpen(false);
+                },
+                toggle() {
+                    setIsOpen(!isOpen);
+                },
+            }),
+            [isOpen],
+        );
 
-    // onAfterOpen
-    useEffect(() => {
-        if (isOpen) onAfterOpen?.();
-    }, [isOpen, onAfterOpen]);
+        // useRef dùng để lưu một giá trị qua các lần render
+        // mà không làm component render lại.
+        const previousIsOpen = useRef(isOpen);
 
-    // closeTimeoutMS
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    const handleRequestClose = () => {
-        if (isClosing) return;
+        // close animation
+        const [isClosing, setIsClosing] = useState(false);
+        const closeTimerRef = useRef(null);
 
-        setIsClosing(true)
+        useEffect(() => {
+            if (isOpen) setIsClosing(false);
+            return clearTimeout(closeTimerRef.current);
+        }, [isOpen]);
 
-        closeTimerRef.current = setTimeout(() => {
-            onRequestClose?.();
-        }, closeTimeoutMS);
-    };
+        // onAfterOpen
+        useEffect(() => {
+            if (isOpen) onAfterOpen?.();
+        }, [isOpen, onAfterOpen]);
 
-    // shouldCloseOnEsc
-    useEffect(() => {
-        if (!shouldCloseOnEsc) return;
+        // closeTimeoutMS
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        const handleRequestClose = () => {
+            if (isClosing) return;
 
-        const handle = (e) => {
-            if (e.code === "Escape") handleRequestClose();
+            setIsClosing(true);
+
+            closeTimerRef.current = setTimeout(() => {
+                onRequestClose?.();
+            }, closeTimeoutMS);
         };
 
-        if (isOpen) document.addEventListener("keyup", handle);
+        // shouldCloseOnEsc
+        useEffect(() => {
+            if (!shouldCloseOnEsc) return;
 
-        return () => document.removeEventListener("keyup", handle);
-    }, [shouldCloseOnEsc, isOpen, onRequestClose, handleRequestClose]);
+            const handle = (e) => {
+                if (e.code === "Escape") handleRequestClose();
+            };
 
-    // bodyOpenClassName
-    useEffect(() => {
-        document.body.classList.add(bodyOpenClassName);
+            if (isOpen) document.addEventListener("keyup", handle);
 
-        return () => document.body.classList.remove(bodyOpenClassName);
-    }, [bodyOpenClassName]);
+            return () => document.removeEventListener("keyup", handle);
+        }, [shouldCloseOnEsc, isOpen, onRequestClose, handleRequestClose]);
 
-    // htmlOpenClassName
-    useEffect(() => {
-        document.documentElement.classList.add(htmlOpenClassName);
+        // bodyOpenClassName
+        useEffect(() => {
+            document.body.classList.add(bodyOpenClassName);
 
-        return () =>
-            document.documentElement.classList.remove(htmlOpenClassName);
-    }, [htmlOpenClassName]);
+            return () => document.body.classList.remove(bodyOpenClassName);
+        }, [bodyOpenClassName]);
 
-    // onAfterClose
-    useEffect(() => {
-        if (previousIsOpen.current && !isOpen) onAfterClose?.();
+        // htmlOpenClassName
+        useEffect(() => {
+            document.documentElement.classList.add(htmlOpenClassName);
 
-        previousIsOpen.current = isOpen;
-    }, [isOpen, onAfterClose]);
+            return () =>
+                document.documentElement.classList.remove(htmlOpenClassName);
+        }, [htmlOpenClassName]);
 
-    // isOpen
-    if (!isOpen) return null;
+        // onAfterClose
+        useEffect(() => {
+            if (previousIsOpen.current && !isOpen) onAfterClose?.();
 
-    return (
-        <div className={clsx(styles.modal, isClosing && styles.closing)}>
-            {/* className */}
-            <div className={clsx(styles.content, className)}>
-                {/* Close btn */}
-                <button
-                    className={styles.closeBtn}
-                    onClick={handleRequestClose}
-                >
-                    &times;
-                </button>
+            previousIsOpen.current = isOpen;
+        }, [isOpen, onAfterClose]);
 
-                {/* children */}
-                <div className={clsx(styles.body)}>{children}</div>
+        // isOpen
+        if (!isOpen) return null;
+
+        return (
+            <div className={clsx(styles.modal, isClosing && styles.closing)}>
+                {/* className */}
+                <div className={clsx(styles.content, className)}>
+                    {/* Close btn */}
+                    <button
+                        className={styles.closeBtn}
+                        onClick={handleRequestClose}
+                    >
+                        &times;
+                    </button>
+
+                    {/* children */}
+                    <div className={clsx(styles.body)}>{children}</div>
+                </div>
+
+                {/* Overlay */}
+                {/* shouldCloseOnOverlayClick */}
+                {/* overlayClassName */}
+                <div
+                    className={clsx(styles.overlay, overlayClassName)}
+                    onClick={() => {
+                        if (shouldCloseOnOverlayClick) handleRequestClose();
+                    }}
+                />
             </div>
-
-            {/* Overlay */}
-            {/* shouldCloseOnOverlayClick */}
-            {/* overlayClassName */}
-            <div
-                className={clsx(styles.overlay, overlayClassName)}
-                onClick={() => {
-                    if (shouldCloseOnOverlayClick) handleRequestClose();
-                }}
-            />
-        </div>
-    );
-}
-
+        );
+    },
+);
 Modal.propTypes = {
     isOpen: PropTypes.bool,
     onAfterOpen: PropTypes.func,
