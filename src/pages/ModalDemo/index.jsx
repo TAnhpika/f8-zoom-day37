@@ -1,5 +1,3 @@
-import styles from "./ModalDemo.module.scss";
-
 import { useRef, useState } from "react";
 import Modal from "@/components/Modal";
 
@@ -23,54 +21,29 @@ function ModalDemo() {
 
     return (
         <>
-            <button
-                className={styles.btn}
-                onClick={() => setActiveModal("basic")}
-            >
-                Basic Modal
-            </button>
+            <button onClick={() => setActiveModal("basic")}>Basic Modal</button>
 
-            <button
-                className={styles.btn}
-                onClick={() => setActiveModal("animation")}
-            >
+            <button onClick={() => setActiveModal("animation")}>
                 Animation Modal
             </button>
 
-            <button
-                className={styles.btn}
-                onClick={() => setActiveModal("x-close")}
-            >
+            <button onClick={() => setActiveModal("x-close")}>
                 X close Modal
             </button>
 
-            <button
-                className={styles.btn}
-                onClick={() => setActiveModal("class-custom")}
-            >
+            <button onClick={() => setActiveModal("class-custom")}>
                 Custom className Modal
             </button>
 
-            <button
-                className={styles.btn}
-                onClick={() => setActiveModal("callback")}
-            >
+            <button onClick={() => setActiveModal("callback")}>
                 Callback Modal
             </button>
 
-            <button
-                className={styles.btn}
-                onClick={() => setActiveModal("advanced")}
-            >
+            <button onClick={() => setActiveModal("advanced")}>
                 Advanced Modal
             </button>
 
-            <button
-                className={styles.btn}
-                onClick={openImperativeModal}
-            >
-                Imperative Modal
-            </button>
+            <button onClick={openImperativeModal}>Imperative Modal</button>
 
             <Modal isOpen={activeModal === "basic"} onRequestClose={closeModal}>
                 <h2>Modal Content</h2>

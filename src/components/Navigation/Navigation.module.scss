@@ -17,7 +17,8 @@
         color: rgb(255, 0, 115);
         text-align: center;
 
-        &:hover {
+        &:hover,
+        &.active {
             color: #f1f5f9;
             background-color: rgb(255, 0, 115);
         }

@@ -1,1 +1,10 @@
-@use 'reset.scss'
+@use "reset.scss";
+
+button {
+    margin: 8px;
+    padding: 8px;
+    border: 1px solid #ff5ca8;
+    // background-color: pink;
+    background: linear-gradient(135deg, #ff8ccf 0%, #ff4fa3 100%);
+    color: #fff
+}

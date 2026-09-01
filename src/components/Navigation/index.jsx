@@ -1,6 +1,6 @@
 import styles from './Navigation.module.scss'
 
-import { Link } from "react-router";
+import { NavLink } from "react-router";
 
 function Navigation() {
     const items = [
@@ -28,13 +28,17 @@ function Navigation() {
             title: "FocusDemo",
             to: "/focus-demo",
         },
+        {
+            title: "HOCDemo",
+            to: "/hoc-demo",
+        },
     ];
     return (
         <>
             <ul className={styles.list}>
                 {items.map((item, index) => (
                     <li key={index}>
-                        <Link to={item.to} className={styles.item}>{item.title}</Link>
+                        <NavLink to={item.to} className={({isActive}) => isActive ? `${styles.item} ${styles.active}` : styles.item}>{item.title}</NavLink>
                     </li>
                 ))}
             </ul>
