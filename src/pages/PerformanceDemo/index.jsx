@@ -6,6 +6,8 @@ import ActionButtons from "./components/ActionButtons";
 import ExpensiveChild from "./components/ExpensiveChild";
 
 function PerformanceDemo() {
+    console.log("PerformanceDemo re-render");
+
     const [count, setCount] = useState(0);
     const [name, setName] = useState("Anhpika");
     const [items, setItems] = useState([]);
@@ -26,7 +28,7 @@ function PerformanceDemo() {
 
     const handleChangeName = () => {
         console.log("Name changed");
-        
+
         setName("Anhpika " + Math.floor(Math.random() * 100));
     };
 
@@ -46,7 +48,7 @@ function PerformanceDemo() {
 
             <br />
             <p>Current name: {name}</p>
-            <button  onClick={handleChangeName}>Change name</button>
+            <button onClick={handleChangeName}>Change name</button>
             <button onClick={handleAddItem}>Add item</button>
 
             <ExpensiveChild items={items} />
