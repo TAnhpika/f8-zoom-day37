@@ -32,6 +32,10 @@ function Navigation() {
             title: "HOCDemo",
             to: "/hoc-demo",
         },
+        {
+            title: "RenderPropsDemo",
+            to: "/render-props-demo",
+        },
     ];
     return (
         <>

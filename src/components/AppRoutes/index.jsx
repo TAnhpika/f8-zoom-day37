@@ -8,6 +8,7 @@ import ScrollDemo from "@/pages/ScrollDemo";
 import PerformanceDemo from "@/pages/PerformanceDemo";
 import FocusDemo from "@/pages/FocusDemo";
 import HOCDemo from "@/pages/HOCDemo";
+import RenderPropsDemo from "@/pages/RenderPropsDemo";
 
 function AppRoutes() {
     return (
@@ -21,6 +22,7 @@ function AppRoutes() {
                     <Route path="/performance-demo" element={<PerformanceDemo />} />
                     <Route path="/focus-demo" element={<FocusDemo />} />
                     <Route path="/hoc-demo" element={<HOCDemo />} />
+                    <Route path="/render-props-demo" element={<RenderPropsDemo />} />
                 </Route>
             </Routes>
         </HashRouter>
