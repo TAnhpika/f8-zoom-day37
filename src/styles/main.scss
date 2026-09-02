@@ -4,7 +4,31 @@ button {
     margin: 8px;
     padding: 8px;
     border: 1px solid #ff5ca8;
-    // background-color: pink;
     background: linear-gradient(135deg, #ff8ccf 0%, #ff4fa3 100%);
     color: #fff
+}
+
+:root {
+    --background-color: #ffffff;
+    --text-color: #222222;
+}
+
+:root[data-theme="dark"] {
+    --background-color: #222222;
+    --text-color: #ffffff;
+}
+
+html,
+body,
+#root {
+    min-height: 100%;
+}
+
+body {
+    margin: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
 }
