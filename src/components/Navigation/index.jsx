@@ -36,6 +36,10 @@ function Navigation() {
             title: "RenderPropsDemo",
             to: "/render-props-demo",
         },
+        {
+            title: "CustomHooksDemo",
+            to: "/custom-hooks-demo",
+        },
     ];
     return (
         <>
